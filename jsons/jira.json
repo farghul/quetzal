@@ -1,0 +1,5 @@
+{
+    "url": "Jira Issue API base URL, ex. https://jira.com/rest/api/latest/",
+    "todo": "JQL query string to search for tickets with the status of new",
+    "token": "Email:Jira API Token combination with Base 64 Encoding"
+}

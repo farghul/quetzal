@@ -1,0 +1,37 @@
+package main
+
+// Switch to the main branch, and pull any changes
+func prepare() {
+	execute("-v", "git", "checkout", "main")
+	execute("-v", "git", "pull")
+}
+
+// Create an update branch if necessary
+func checkout() {
+	if exists(branch, ticket) {
+		execute("-v", "git", "checkout", branch+ticket)
+	} else {
+		execute("-v", "git", "checkout", "-b", branch+ticket)
+	}
+}
+
+// Add and commit the updates
+func commit() {
+	execute("-v", "git", "add", ".")
+	execute("-v", "git", "commit", "-m", ticket+" install "+plugin)
+}
+
+// Tag the version so Satis can package it
+func tags() {
+	execute("-v", "git", "tag", "v"+satis.Version)
+	execute("-v", "git", "push", "origin", "--tags")
+}
+
+// Push modified content to the git repository
+func push() {
+	if exists(branch, ticket) {
+		execute("-v", "git", "push")
+	} else {
+		execute("-v", "git", "push", "--set-upstream", "origin", branch+ticket)
+	}
+}

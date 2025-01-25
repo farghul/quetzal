@@ -1,0 +1,11 @@
+{
+    "uuid": "Universally Unique Identifier (UUID)",
+    "email": "Email address for the reporting user",
+    "url": "ButBucket API URL",
+    "token": "ButBucket API token",
+    "reviewers": {
+        "one": "Pull Request Reviewer",
+        "two": "Pull Request Reviewer",
+        "three": "Pull Request Reviewer"
+    }
+}
