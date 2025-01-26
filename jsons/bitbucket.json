@@ -1,11 +1,11 @@
 {
-    "uuid": "Universally Unique Identifier (UUID)",
     "email": "Email address for the reporting user",
-    "url": "ButBucket API URL",
-    "token": "ButBucket API token",
     "reviewers": {
-        "one": "Pull Request Reviewer",
-        "two": "Pull Request Reviewer",
-        "three": "Pull Request Reviewer"
-    }
+        "one": "Pull Request Reviewer email address",
+        "two": "Pull Request Reviewer email address",
+        "three": "Pull Request Reviewer email address"
+    },
+    "token": "Email:BitBucket API Token combination with Base 64 Encoding",
+    "url": "BitBucket API issue base URL ex. https://api.bitbucket.org/2.0/",
+    "uuid": "Universally Unique Identifier (UUID)"
 }
