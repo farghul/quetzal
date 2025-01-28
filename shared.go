@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -66,14 +65,6 @@ func document(name string, d []byte) {
 	inspect(os.WriteFile(name, d, 0644))
 }
 
-// Enter a record to the log file
-func journal(message string) {
-	file, err := os.OpenFile(assets+"logs/quetzal.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	inspect(err)
-	log.SetOutput(file)
-	log.Println(message)
-}
-
 // Run a terminal command using flags to customize the output
 func execute(variation, task string, args ...string) []byte {
 	osCmd := exec.Command(task, args...)
@@ -97,16 +88,6 @@ func inspect(err error) {
 		fmt.Println(err)
 		return
 	}
-}
-
-// Check to see if the current release branch already exists locally
-func exists(prefix, tag string) bool {
-	found := false
-	b, _ := exec.Command("git", "branch").Output()
-	if strings.Contains(string(b), prefix+tag) {
-		found = true
-	}
-	return found
 }
 
 // Empty the contents a folder
@@ -141,37 +122,4 @@ func expose(file string) *os.File {
 	outcome, err := os.Open(file)
 	inspect(err)
 	return outcome
-}
-
-// Print a colourized error message
-func alert(message string) {
-	fmt.Println("\n", bgred, message, halt, reset)
-	fmt.Println(bgyellow, "Use -h for more detailed help information ")
-	os.Exit(0)
-}
-
-// Provide and highlight informational messages
-func tracking(message string) {
-	fmt.Println(yellow)
-	fmt.Println("**", reset, message, yellow, "**", reset)
-}
-
-// Print program version number
-func version() {
-	fmt.Println("\n", yellow+"quetzal", green+bv, reset)
-}
-
-// Print help information for using the program
-func help() {
-	fmt.Println(yellow, "\nUsage:", reset)
-	fmt.Println("  [program] [flag]")
-	fmt.Println(yellow, "\nOptions:")
-	fmt.Println(green, " -h, --help", reset, "      Help information")
-	fmt.Println(green, " -v, --version", reset, "   Display program version")
-	fmt.Println(yellow, "\nExample:", reset)
-	fmt.Println("   quetzal")
-	fmt.Println(yellow, "\nHelp:", reset)
-	fmt.Println("  For more information go to:")
-	fmt.Println(green, "   https://github.com/farghul/quetzal.git")
-	fmt.Println(reset)
 }

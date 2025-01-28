@@ -1,5 +1,10 @@
 package main
 
+import (
+	"os/exec"
+	"strings"
+)
+
 // Switch to the main branch, and pull any changes
 func prepare() {
 	execute("-v", "git", "checkout", "main")
@@ -13,6 +18,16 @@ func checkout() {
 	} else {
 		execute("-v", "git", "checkout", "-b", branch+ticket)
 	}
+}
+
+// Check to see if the current release branch already exists locally
+func exists(prefix, tag string) bool {
+	found := false
+	b, _ := exec.Command("git", "branch").Output()
+	if strings.Contains(string(b), prefix+tag) {
+		found = true
+	}
+	return found
 }
 
 // Add and commit the updates

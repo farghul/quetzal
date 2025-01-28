@@ -49,16 +49,14 @@ GOOS=linux GOARCH=amd64 go build -o [name] .
 
 ``` zsh
 -h, --help        Help information
+-r, --run         Run program
 -v, --version     Display program version
 ```
 
 ## Example
 
 ``` zsh
-~
-> quetzal -v
-
-quetzal 1.0.0 
+quetzal -r
 ```
 
 ## License
