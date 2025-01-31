@@ -17,6 +17,7 @@ func checkout() {
 		execute("-v", "git", "checkout", branch+ticket)
 	} else {
 		execute("-v", "git", "checkout", "-b", branch+ticket)
+		cherry = true
 	}
 }
 
@@ -44,9 +45,9 @@ func tags() {
 
 // Push modified content to the git repository
 func push() {
-	if exists(branch, ticket) {
-		execute("-v", "git", "push")
-	} else {
+	if cherry {
 		execute("-v", "git", "push", "--set-upstream", "origin", branch+ticket)
+	} else {
+		execute("-v", "git", "push")
 	}
 }
