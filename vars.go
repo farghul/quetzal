@@ -24,7 +24,6 @@ type Downloads struct {
 	Polylang  string `json:"polylang-pro"`
 	AllExport string `json:"wp-all-export-pro"`
 	Gravity   string `json:"gravityforms"`
-	SearchWP  string `json:"searchwp"`
 	Calendar  string `json:"events-calendar-pro"`
 	Tickets   string `json:"event-tickets-plus"`
 	Virtual   string `json:"events-virtual"`
@@ -87,7 +86,7 @@ type JQL struct {
 // Sites holds the login URLs to access the premium plugin accounts
 type Sites struct {
 	Polylang  string `json:"polylang-pro"`
-	Allimport string `json:"wp-all-export-pro"`
+	AllExport string `json:"wp-all-export-pro"`
 	Gravity   string `json:"gravityforms"`
 	SearchWP  string `json:"searchwp"`
 }
