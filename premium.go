@@ -43,16 +43,16 @@ func premium() {
 		execute("-v", "curl", "-L", download.Virtual, "-o", assets+"temp/"+folder[1]+".zip")
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
 	case "gravityforms":
-		login(cred[0].Username, cred[0].Password, download.Gravity, site.Gravity)
+		login(credential.Credentials[0].Username, credential.Credentials[0].Password, download.Gravity, site.Gravity)
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
 	case "polylang-pro":
-		login(cred[1].Username, cred[1].Password, download.Polylang, site.Polylang)
+		login(credential.Credentials[1].Username, credential.Credentials[1].Password, download.Polylang, site.Polylang)
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
 	case "uji-countdown-premium":
 		execute("-v", "curl", "-L", download.Uji, "-o", assets+"temp/"+folder[1]+".zip")
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
 	case "wp-all-export-pro":
-		login(cred[2].Username, cred[2].Password, download.AllExport, site.AllExport)
+		login(credential.Credentials[2].Username, credential.Credentials[2].Password, download.AllExport, site.AllExport)
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
 	}
 

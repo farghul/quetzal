@@ -29,7 +29,7 @@ func serialize() {
 		case 0:
 			json.Unmarshal(data, &bitbucket)
 		case 1:
-			json.Unmarshal(data, &cred)
+			json.Unmarshal(data, &credential)
 		case 2:
 			json.Unmarshal(data, &download)
 		case 3:

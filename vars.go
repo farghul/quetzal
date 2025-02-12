@@ -13,10 +13,11 @@ type BitBucket struct {
 	}
 }
 
-// Credentials builds a username:password array
-type Credentials []struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+type Authentication struct {
+	Credentials []struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	} `json:"credentials"`
 }
 
 // Downloads contains the direct download links
@@ -115,19 +116,19 @@ const (
 
 // List of variables
 var (
-	query     JQL
-	ecp       ECP
-	evtp      EVTP
-	jira      Jira
-	satis     Satis
-	site      Sites
-	plugin    string
-	ticket    string
-	download  Downloads
-	bitbucket BitBucket
-	cred      Credentials
-	cherry    = false
-	jsons     = []string{assets + "jsons/bitbucket.json", assets + "jsons/credentials.json", assets + "jsons/downloads.json", assets + "jsons/jira.json", assets + "jsons/sites.json"}
+	query      JQL
+	ecp        ECP
+	evtp       EVTP
+	jira       Jira
+	satis      Satis
+	site       Sites
+	plugin     string
+	ticket     string
+	download   Downloads
+	bitbucket  BitBucket
+	credential Authentication
+	cherry     = false
+	jsons      = []string{assets + "jsons/bitbucket.json", assets + "jsons/credentials.json", assets + "jsons/downloads.json", assets + "jsons/jira.json", assets + "jsons/sites.json"}
 	// Declare string slices
 	folder, number, prem []string
 )
