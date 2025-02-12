@@ -25,7 +25,6 @@ func quarterback() {
 	tags()
 	tracking("Pushing to repository")
 	push()
-	pullrequest()
 }
 
 // Premium directs the preliminary actions to determine if the program can continue
@@ -81,14 +80,14 @@ func sift(box []string) {
 		i++
 		ticket = box[i]
 
-		assign(plugin)
+		assign()
 		premium()
 	}
 }
 
 // Split the supplied arguments and assign them to variables
-func assign(p string) {
-	number = strings.Split(p, ":")
+func assign() {
+	number = strings.Split(plugin, ":")
 	folder = strings.Split(number[0], "/")
 }
 
@@ -135,9 +134,4 @@ func correct() {
 		updated, _ = json.MarshalIndent(satis, "", "    ")
 	}
 	document("composer.json", updated)
-}
-
-// Create a pull request in BitBucket for any updated Premium plugins
-func pullrequest() {
-	execute("-v", "curl", "-L", "-X", "POST", "--url", bitbucket.URL+branch+ticket+"/pull-requests/", "--header", "Authorization: Basic "+bitbucket.Token, "--header", "Content-Type: application/json", "--data", "{'title': 'Update/"+ticket+"','source': {'branch': {'name': '"+branch+ticket+"'}}, 'destination': {'branch': 'name': 'main'}, 'reviewers': [{'uuid': '"+bitbucket.Reviewers.One+"'}], 'close_source_branch': true}")
 }
