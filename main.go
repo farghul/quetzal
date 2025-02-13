@@ -14,7 +14,6 @@ func main() {
 	case "-h", "--help":
 		help()
 	case "-r", "--run":
-		clearout(assets + "temp/")
 		serialize()
 		prem = compiler("premium")
 		if len(prem) > 0 {
@@ -22,6 +21,7 @@ func main() {
 		} else {
 			journal("No Premium plugin update tickets to process.")
 		}
+		clearout(assets + "temp/")
 	case "-v", "--version":
 		version()
 	case "--zero":

@@ -84,19 +84,18 @@ type JQL struct {
 	} `json:"issues"`
 }
 
-// Sites holds the login URLs to access the premium plugin accounts
-type Sites struct {
-	Polylang  string `json:"polylang-pro"`
-	AllExport string `json:"wp-all-export-pro"`
-	Gravity   string `json:"gravityforms"`
-	SearchWP  string `json:"searchwp"`
-}
-
 // Satis structure captures the contents of the composer.json file for typical premium plugins
 type Satis struct {
 	Name    string `json:"name"`
 	Version string `json:"version"`
 	Type    string `json:"type"`
+}
+
+// Sites holds the login URLs to access the premium plugin accounts
+type Sites struct {
+	Polylang  string `json:"polylang-pro"`
+	AllExport string `json:"wp-all-export-pro"`
+	Gravity   string `json:"gravityforms"`
 }
 
 // List of constant values
