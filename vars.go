@@ -110,8 +110,8 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted "
 	zero     string = "Not enough arguments supplied -"
-	assets   string = "/Users/bstuike/Documents/shared/"
-	repos    string = "/Users/bstuike/Documents/bitbucket/"
+	assets   string = "/data/scripts/automation/assets/"
+	repos    string = "/data/scripts/automation/bitbucket/"
 )
 
 // List of variables
