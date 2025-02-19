@@ -34,7 +34,7 @@ func exists(prefix, tag string) bool {
 // Add and commit the updates
 func commit() {
 	execute("-v", "git", "add", ".")
-	execute("-v", "git", "commit", "-m", ticket+" install "+plugin)
+	execute("-v", "git", "commit", "-m", ticket, "-m", "Install "+plugin)
 }
 
 // Tag the version so Satis can package it
