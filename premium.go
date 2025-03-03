@@ -27,6 +27,7 @@ func premium() {
 	os.Chdir(repos + folder[1])
 	learn()
 
+	/* This section does not work as expected, need to come back to it.
 	switch folder[1] {
 	case "events-calendar-pro":
 		execute("-v", "curl", "-L", download.Calendar, "-o", assets+"temp/"+folder[1]+".zip")
@@ -37,23 +38,19 @@ func premium() {
 	case "events-virtual":
 		execute("-v", "curl", "-L", download.Virtual, "-o", assets+"temp/"+folder[1]+".zip")
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
-		/* This section does not work as expected, need to come back to it.
-		case "gravityforms":
-			login(credential.Credentials[0].Username, credential.Credentials[0].Password, download.Gravity, site.Gravity)
-			execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
-		case "polylang-pro":
-			login(credential.Credentials[1].Username, credential.Credentials[1].Password, download.Polylang, site.Polylang)
-			execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
-		*/
+	case "gravityforms":
+		login(credential.Credentials[0].Username, credential.Credentials[0].Password, download.Gravity, site.Gravity)
+		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
+	case "polylang-pro":
+		login(credential.Credentials[1].Username, credential.Credentials[1].Password, download.Polylang, site.Polylang)
+		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
 	case "uji-countdown-premium":
 		execute("-v", "curl", "-L", download.Uji, "-o", assets+"temp/"+folder[1]+".zip")
 		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
-		/* This section does not work as expected, need to come back to it.
-		case "wp-all-export-pro":
-			login(credential.Credentials[2].Username, credential.Credentials[2].Password, download.AllExport, site.AllExport)
-			execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
-		*/
-	}
+	case "wp-all-export-pro":
+		login(credential.Credentials[2].Username, credential.Credentials[2].Password, download.AllExport, site.AllExport)
+		execute("-v", "unzip", assets+"temp/"+folder[1]+".zip", "-d", assets+"temp/")
+	}*/
 
 	satis.Version, ecp.Version, evtp.Version = number[1], number[1], number[1]
 
@@ -67,6 +64,23 @@ func premium() {
 		alert("Plugin name does not match composer.json entry - program halted")
 	}
 }
+
+/* This function is releated to unused code.
+// Process to pass credentials and download a zip file
+func login(username, password, download, login string) {
+	options := cookiejar.Options{
+		PublicSuffixList: publicsuffix.List,
+	}
+	jar, err := cookiejar.New(&options)
+	inspect(err)
+	client := http.Client{Jar: jar}
+	client.PostForm(login, url.Values{
+		"password": {password},
+		"username": {username},
+	})
+
+	execute("-v", "curl", "-L", download, "-o", assets+"temp/"+folder[1]+".zip")
+}*/
 
 // Iterate through the Args array and assign plugin and ticket values
 func sift(box []string) {
@@ -97,24 +111,6 @@ func learn() {
 	err = json.Unmarshal(current, &evtp)
 	inspect(err)
 }
-
-/* This function is releated to unused code.
-// Process to pass credentials and download a zip file
-func login(username, password, download, login string) {
-	options := cookiejar.Options{
-		PublicSuffixList: publicsuffix.List,
-	}
-	jar, err := cookiejar.New(&options)
-	inspect(err)
-	client := http.Client{Jar: jar}
-	client.PostForm(login, url.Values{
-		"password": {password},
-		"username": {username},
-	})
-
-	execute("-v", "curl", "-L", download, "-o", assets+"temp/"+folder[1]+".zip")
-}
-*/
 
 // Run the update script on downloaded content
 func script() {
