@@ -109,8 +109,8 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted "
 	zero     string = "Not enough arguments supplied -"
-	assets   string = "/data/scripts/automation/assets/"
-	repos    string = "/data/scripts/automation/bitbucket/"
+	assets   string = "/data/automation/assets/"
+	repos    string = "/data/automation/bitbucket/"
 )
 
 // List of variables
@@ -127,7 +127,7 @@ var (
 	bitbucket  BitBucket
 	credential Authentication
 	cherry     = false
-	jsons      = []string{assets + "jsons/bitbucket.json", assets + "jsons/credentials.json", assets + "jsons/downloads.json", assets + "jsons/jira.json", assets + "jsons/sites.json"}
+	jsons      = []string{assets + "bitbucket.json", assets + "credentials.json", assets + "downloads.json", assets + "jira.json", assets + "sites.json"}
 	// Declare string slices
 	folder, number, prem []string
 )

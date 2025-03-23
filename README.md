@@ -21,8 +21,8 @@ Quetzal searches the targeted Jira API for tickets marked as **"New"** (aka ToDo
 Before building the application, change the value of the `assets` and `repos` constants to reflect your environment:
 
 ``` go
-assets string = "/data/scripts/automation/assets/"
-repos string = "/data/scripts/automation/bitbucket/"
+assets string = "/data/automation/assets/"
+repos string = "/data/automation/bitbucket/"
 ```
 
 Then, from the root folder containing `main.go`, use the command that matches your environment:
