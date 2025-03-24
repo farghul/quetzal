@@ -21,7 +21,7 @@ func main() {
 		} else {
 			journal("No Premium plugin update tickets to process.")
 		}
-		clearout(assets + "temp/")
+		clearout(temp)
 	case "-v", "--version":
 		version()
 	case "--zero":
