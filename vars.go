@@ -108,7 +108,7 @@ const (
 	bgred    string = "\033[41m"
 	bgyellow string = "\033[43m"
 	halt     string = "program halted "
-	zero     string = "Not enough arguments supplied -"
+	temp     string = "/data/automation/temp/"
 	assets   string = "/data/automation/assets/"
 	repos    string = "/data/automation/bitbucket/"
 )
