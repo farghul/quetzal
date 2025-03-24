@@ -9,16 +9,20 @@ pipeline {
         )
     }
     stages {
-        stage("Sync") {
+        stage("Pull Changes") {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/quetzal") {
-                        sh "git pull"
+                        sh '''#!/bin/bash
+                        source ~/.bashrc
+                        git fetch --all
+                        git pull
+                        '''
                     }
                 }
             }
         }
-        stage("Build") {
+        stage("Build Quetzal") {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/quetzal") {
@@ -27,12 +31,12 @@ pipeline {
                 }
             }
         }
-        stage("Run") {
+        stage("Run Quetzal") {
             steps {
                 lock("satis-rebuild-resource") {
                     timeout(time: 5, unit: "MINUTES") {
                         retry(2) {
-                            sh "/data/automation/scripts/run_quetzal.sh"
+                            sh "/data/automation/scripts/quetzal.sh"
                         }
                     }
                 }
