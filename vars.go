@@ -100,17 +100,17 @@ type Sites struct {
 
 // List of constant values
 const (
-	bv       string = "1.0.0"
-	branch   string = "update/"
-	reset    string = "\033[0m"
-	green    string = "\033[32m"
-	yellow   string = "\033[33m"
-	bgred    string = "\033[41m"
-	bgyellow string = "\033[43m"
-	halt     string = "program halted "
-	temp     string = "/data/automation/temp/"
-	assets   string = "/data/automation/assets/"
-	repos    string = "/data/automation/bitbucket/"
+	bv        string = "1.0.0"
+	branch    string = "update/"
+	reset     string = "\033[0m"
+	green     string = "\033[32m"
+	yellow    string = "\033[33m"
+	bgred     string = "\033[41m"
+	bgyellow  string = "\033[43m"
+	halt      string = "program halted "
+	temp      string = "/data/automation/temp/"
+	repos     string = "/data/automation/bitbucket/"
+	resources string = "/data/automation/resources/"
 )
 
 // List of variables
@@ -127,7 +127,7 @@ var (
 	bitbucket  BitBucket
 	credential Authentication
 	cherry     = false
-	jsons      = []string{assets + "bitbucket.json", assets + "credentials.json", assets + "downloads.json", assets + "jira.json", assets + "sites.json"}
+	jsons      = []string{resources + "bitbucket.json", resources + "credentials.json", resources + "downloads.json", resources + "jira.json", resources + "sites.json"}
 	// Declare string slices
 	folder, number, prem []string
 )
