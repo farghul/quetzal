@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strings"
@@ -121,5 +122,15 @@ func ls(folder string) []string {
 func expose(file string) *os.File {
 	outcome, err := os.Open(file)
 	inspect(err)
+	return outcome
+}
+
+// Read any file and return the contents as a byte variable
+func read(file string) []byte {
+	mission, err := os.Open(file)
+	inspect(err)
+	outcome, err := io.ReadAll(mission)
+	inspect(err)
+	defer mission.Close()
 	return outcome
 }

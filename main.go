@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -19,7 +18,7 @@ func main() {
 		if len(prem) > 0 {
 			sift(prem)
 		} else {
-			journal("No Premium plugin update tickets to process.")
+			fmt.Println("No Premium plugin update tickets to process.")
 		}
 		clearout(temp)
 	case "-v", "--version":
@@ -30,14 +29,6 @@ func main() {
 		alert("Unknown argument(s) -")
 		help()
 	}
-}
-
-// Enter a record to the log file
-func journal(message string) {
-	file, err := os.OpenFile("/data/automation/logs/quetzal.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	inspect(err)
-	log.SetOutput(file)
-	log.Println(message)
 }
 
 // Print a colourized error message

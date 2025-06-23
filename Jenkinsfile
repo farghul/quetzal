@@ -26,7 +26,7 @@ pipeline {
             steps {
                 lock("satis-rebuild-resource") {
                     dir("/data/automation/github/quetzal") {
-                        sh "/data/apps/go/bin/go build -o /data/automation/bin/quetzal ."
+                        sh "/data/apps/go/bin/go build -o /data/automation/bin/quetzal"
                     }
                 }
             }
@@ -36,7 +36,9 @@ pipeline {
                 lock("satis-rebuild-resource") {
                     timeout(time: 5, unit: "MINUTES") {
                         retry(2) {
-                            sh "/data/automation/scripts/quetzal.sh"
+                            dir("/data/automation/bitbucket/desso-automation-conf/scripts") {
+                                sh "quetzal.sh"
+                            }
                         }
                     }
                 }
