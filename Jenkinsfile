@@ -36,8 +36,8 @@ pipeline {
                 lock("satis-rebuild-resource") {
                     timeout(time: 5, unit: "MINUTES") {
                         retry(2) {
-                            dir("/data/automation/bitbucket/desso-automation-conf/scripts") {
-                                sh "quetzal.sh"
+                            dir("/data/automation/bitbucket/desso-automation-conf/scripts/updates") {
+                                sh "./quetzal.sh"
                             }
                         }
                     }
