@@ -16,6 +16,7 @@ pipeline {
                         sh '''#!/bin/bash
                         source ~/.bashrc
                         git fetch --all
+                        git switch main
                         git pull
                         '''
                     }
@@ -36,7 +37,7 @@ pipeline {
                 lock("satis-rebuild-resource") {
                     timeout(time: 5, unit: "MINUTES") {
                         retry(2) {
-                            dir("/data/automation/bitbucket/desso-automation-conf/scripts/updates") {
+                            dir("/data/automation/bitbucket/desso-automation-conf/scripts/plugin") {
                                 sh "./quetzal.sh"
                             }
                         }
