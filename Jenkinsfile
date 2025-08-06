@@ -9,39 +9,55 @@ pipeline {
         )
     }
     stages {
-        stage('Clean WS') {
+        stage("Empty_Folder") {
             steps {
-                cleanWs()
-            }
-        }
-        stage("Checkout Quetzal") {
-            steps {
-                checkout scmGit(
-                    branches: [[name: 'main']],
-                    userRemoteConfigs: [[url: 'https://github.com/farghul/quetzal.git']]
-                )
-            }
-        }
-        stage("Build Quetzal") {
-            steps {
-                script {
-                    sh "/data/apps/go/bin/go build -o /data/automation/bin/quetzal"
+                dir('/data/automation/checkouts'){
+                    script {
+                        deleteDir()
+                    }
                 }
             }
         }
-        stage("Checkout DAC") {
-            steps {
-                checkout scmGit(
-                    branches: [[name: 'main']],
-                    userRemoteConfigs: [[credentialsId: 'DES-Project', url: 'https://bitbucket.org/bc-gov/desso-automation-conf.git']]
-                )
+        stage('Checkout_Quetzal'){
+            steps{
+                dir('/data/automation/checkouts/quetzal'){
+                    git url: 'https://github.com/farghul/quetzal.git' , branch: 'main'
+                }
             }
         }
-        stage('Run Quetzal') {
+        stage('Build_Quetzal') {
             steps {
-                script {
-                    sh './scripts/plugin/quetzal.sh'
+                dir('/data/automation/checkouts/quetzal'){
+                    script {
+                        sh "/data/apps/go/bin/go build -o /data/automation/bin/quetzal"
+                    }
                 }
+            }
+        }
+        stage("Checkout_DAC") {
+            steps{
+                dir('/data/automation/checkouts/dac'){
+                    git credentialsId: 'DES-Project', url: 'https://bitbucket.org/bc-gov/desso-automation-conf.git', branch: 'main'
+                }
+            }
+        }
+        stage('Run_Quetzal') {
+            steps {
+                dir('/data/automation/checkouts/dac'){
+                    script {
+                        sh './scripts/plugin/quetzal.sh'
+                    }
+                }
+            }
+        }
+        post {
+            always {
+                cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'], [pattern: '.propsfile', type: 'EXCLUDE']]
+                )
             }
         }
     }

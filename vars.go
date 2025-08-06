@@ -109,7 +109,7 @@ const (
 	bgyellow string = "\033[43m"
 	halt     string = "program halted "
 	temp     string = "/data/automation/temp/"
-	repos    string = "/data/automation/bitbucket/"
+	repos    string = "/data/automation/checkouts/"
 	config   string = "desso-automation-conf/atlassian/"
 )
 
