@@ -110,7 +110,7 @@ const (
 	halt     string = "program halted "
 	temp     string = "/data/automation/temp/"
 	repos    string = "/data/automation/checkouts/"
-	config   string = "desso-automation-conf/atlassian/"
+	config   string = "desso-automation-conf/jsons/"
 )
 
 // List of variables
