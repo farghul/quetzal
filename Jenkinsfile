@@ -9,43 +9,39 @@ pipeline {
         )
     }
     stages {
-        stage('Empty_Folder') {
+        stage("Clear") {
             steps {
-                dir('/data/automation/checkouts'){
+                dir("/data/automation/checkouts"){
                     script {
                         deleteDir()
                     }
                 }
             }
         }
-        stage('Checkout_Quetzal'){
+        stage("Checkouts"){
             steps{
-                dir('/data/automation/checkouts/quetzal'){
-                    git url: 'https://github.com/farghul/quetzal.git' , branch: 'main'
+                dir("/data/automation/checkouts/quetzal"){
+                    git url: "https://github.com/farghul/quetzal.git", branch: "main"
+                }
+                dir("/data/automation/checkouts/dac"){
+                    git credentialsId: "DES-Project", url: "https://bitbucket.org/bc-gov/desso-automation-conf.git", branch: "main"
                 }
             }
         }
-        stage('Build_Quetzal') {
+        stage("Build") {
             steps {
-                dir('/data/automation/checkouts/quetzal'){
+                dir("/data/automation/checkouts/quetzal"){
                     script {
-                        sh '/data/apps/go/bin/go build -o /data/automation/bin/quetzal'
+                        sh "/data/apps/go/bin/go build -o /data/automation/bin/quetzal"
                     }
                 }
             }
         }
-        stage('Checkout_DAC') {
-            steps{
-                dir('/data/automation/checkouts/dac'){
-                    git credentialsId: 'DES-Project', url: 'https://bitbucket.org/bc-gov/desso-automation-conf.git', branch: 'main'
-                }
-            }
-        }
-        stage('Run_Quetzal') {
+        stage("Run") {
             steps {
-                dir('/data/automation/checkouts/dac/scripts/plugin'){
+                dir("/data/automation/checkouts/dac/scripts/plugin"){
                     script {
-                        sh './quetzal.sh'
+                        sh "./quetzal.sh"
                     }
                 }
             }
