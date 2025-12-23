@@ -39,7 +39,7 @@ pipeline {
         }
         stage("Run") {
             steps {
-                dir("/data/automation/checkouts/dac/scripts/plugin"){
+                dir("/data/automation/checkouts/quetzal"){
                     script {
                         sh "./quetzal.sh"
                     }
