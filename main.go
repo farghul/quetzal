@@ -8,11 +8,13 @@ import (
 // Launch the program and execute the appropriate code
 func main() {
 	var flag string = flags()
+	logo()
 
 	switch flag {
 	case "-h", "--help":
 		help()
 	case "-r", "--run":
+		credits()
 		serialize()
 		prem = compiler("premium")
 		if len(prem) > 0 {
@@ -22,45 +24,60 @@ func main() {
 		}
 		clearout(temp)
 	case "-v", "--version":
-		version()
 	case "--zero":
-		alert("No flag detected -")
+		alert("No flag detected - ")
 	default:
-		alert("Unknown argument(s) -")
+		alert("Unknown argument(s) - ")
 		help()
 	}
 }
 
+// Provide and highlight an informational message
+func inform(message string) {
+	Yellow.Printf("%s", "** ")
+	fmt.Print(message)
+	Yellow.Println(" **")
+}
+
 // Print a colourized error message
 func alert(message string) {
-	fmt.Println("\n", bgred, message, halt, reset)
-	fmt.Println(bgyellow, "Use -h for more detailed help information ")
+	Red.Printf("\n%s", "Error: ")
+	fmt.Printf("%s", message)
+	BGRed.Println(halt)
+	inform("Use -h to display help information")
 	os.Exit(0)
-}
-
-// Provide and highlight informational messages
-func tracking(message string) {
-	fmt.Println(yellow)
-	fmt.Println("**", reset, message, yellow, "**", reset)
-}
-
-// Print program version number
-func version() {
-	fmt.Println("\n", yellow+"quetzal", green+bv, reset)
 }
 
 // Print help information for using the program
 func help() {
-	fmt.Println(yellow, "\nUsage:", reset)
+	Yellow.Println("\nUsage:")
 	fmt.Println("  [program] [flag]")
-	fmt.Println(yellow, "\nOptions:")
-	fmt.Println(green, " -h, --help", reset, "      Help Information")
-	fmt.Println(green, " -r, --run", reset, "       Run Program")
-	fmt.Println(green, " -v, --version", reset, "   Display Program Version")
-	fmt.Println(yellow, "\nExample:", reset)
-	fmt.Println("   quetzal -r")
-	fmt.Println(yellow, "\nHelp:", reset)
+	Yellow.Println("\nOperational Flags:")
+	Green.Printf("%s", "  -h, --help")
+	fmt.Println("		Help Information")
+	Green.Printf("%s", "  -r, --run")
+	fmt.Println("		Run Program")
+	Green.Printf("%s", "  -v, --version")
+	fmt.Println("		Display Program Version")
+	Yellow.Println("\nExample:")
+	fmt.Println("  Adding your path to file if necessary, run:")
+	Green.Printf("%s", "    quetzal -r")
+	Yellow.Println("\nHelp:")
 	fmt.Println("  For more information go to:")
-	fmt.Println(green, "   https://github.com/farghul/quetzal.git")
-	fmt.Println(reset)
+	Green.Println("    https://github.com/farghul/quetzal.git")
+}
+
+// Print the program logo and build version
+func logo() {
+	Blue.Println("▗▄▄▄▖ ▗▖ ▗▖▗▄▄▄▖▗▄▄▄▖▗▄▄▄▄▖ ▗▄▖ ▗▖   ")
+	Blue.Println("▐▌ ▐▌ ▐▌ ▐▌▐▌     █     ▗▞▘▐▌ ▐▌▐▌   ")
+	Blue.Println("▐▌ ▐▌ ▐▌ ▐▌▐▛▀▀▘  █   ▗▞▘  ▐▛▀▜▌▐▌   ")
+	Blue.Println("▐▙▄▟▙▖▝▚▄▞▘▐▙▄▄▖  █  ▐▙▄▄▄▖▐▌ ▐▌▐▙▄▄▖")
+	Blue.Println(bv)
+}
+
+// Print program function and creator credit
+func credits() {
+	fmt.Println("\nA ticket creation tool for Jira")
+	fmt.Println("Created by Byron Stuike")
 }

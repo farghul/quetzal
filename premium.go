@@ -9,16 +9,16 @@ import (
 // A sequential list of tasks run to complete the program
 func quarterback() {
 	prepare()
-	tracking("Switching to update branch")
+	inform("Switching to update branch")
 	checkout()
-	tracking("Running update script")
+	inform("Running update script")
 	script()
 	correct()
-	tracking("Commiting changes")
+	inform("Commiting changes")
 	commit()
-	tracking("Tagging to Satis")
+	inform("Tagging to Satis")
 	tags()
-	tracking("Pushing to repository")
+	inform("Pushing to repository")
 	push()
 }
 

@@ -1,3 +1,3 @@
 module github.com/farghul/quetzal
 
-go 1.24
+go 1.26

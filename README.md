@@ -22,8 +22,8 @@ Before building the application, change the value of these constants to reflect 
 
 ``` go
 temp     string = "/data/automation/temp/"
-repos    string = "/data/automation/bitbucket/"
-config   string = "desso-automation-config/jsons/"
+repos    string = "/data/automation/repos/"
+config   string = "/data/automation/jsons/"
 ```
 
 Then, from the root folder containing `main.go`, use the command that matches your environment:
