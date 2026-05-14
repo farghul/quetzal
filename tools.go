@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"strings"
@@ -23,6 +25,7 @@ func flags() string {
 
 // Read the JSON files and Unmarshal the data into the appropriate Go structure
 func serialize() {
+	jsons := []string{config + "bitbucket.json", config + "credentials.json", config + "downloads.json", config + "jira.json", config + "sites.json"}
 	for index, element := range jsons {
 		data, err := os.ReadFile(element)
 		inspect(err)
@@ -30,35 +33,67 @@ func serialize() {
 		case 0:
 			json.Unmarshal(data, &bitbucket)
 		case 1:
-			json.Unmarshal(data, &credential)
+			json.Unmarshal(data, &auth)
 		case 2:
 			json.Unmarshal(data, &download)
 		case 3:
 			json.Unmarshal(data, &jira)
 		case 4:
-			json.Unmarshal(data, &site)
+			json.Unmarshal(data, &sites)
 		}
 	}
 }
 
 // Compile the results of a Jira API query and save summary and key into a string slice
 func compiler(element string) []string {
-	json.Unmarshal(api(jira.ToDo), &query)
-	var candidate []string
+	var data []byte
+	var err error
 
-	for i := 0; i < len(query.Issues); i++ {
+	data, err = api(jira.Basic + jira.ToDo)
+	inspect(err)
+	err = json.Unmarshal(data, &query)
+	inspect(err)
+
+	var candidate []string
+	for i := range query.Issues {
 		if strings.Contains(query.Issues[i].Fields.Summary, element) {
 			candidate = append(candidate, query.Issues[i].Fields.Summary)
 			candidate = append(candidate, query.Issues[i].Key)
 		}
 	}
+	fmt.Println(candidate)
 	return candidate
 }
 
-// Search the Jira API for results matching the passed criteria
-func api(criteria string) []byte {
-	result := execute("-c", "curl", "--request", "GET", "--url", jira.URL+"search?jql="+criteria, "--header", "Authorization: Basic "+jira.Token, "--header", "Accept: application/json")
-	return result
+func api(criteria string) ([]byte, error) {
+	baseURL := jira.URL + "search/jql?jql="
+
+	fullURL := baseURL + criteria
+
+	// Create request
+	req, err := http.NewRequest("GET", fullURL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	// Set headers
+	req.Header.Set("Authorization", "Basic "+jira.Token)
+	req.Header.Set("Accept", "application/json")
+
+	// Execute request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Read response
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return body, nil
 }
 
 // Write a passed variable to a named file
@@ -66,27 +101,24 @@ func document(name string, d []byte) {
 	inspect(os.WriteFile(name, d, 0644))
 }
 
-// Run a terminal command using flags to customize the output
-func execute(variation, task string, args ...string) []byte {
-	osCmd := exec.Command(task, args...)
-	switch variation {
-	case "-c":
-		result, err := osCmd.Output()
-		inspect(err)
-		return result
-	case "-v":
-		osCmd.Stdout = os.Stdout
-		osCmd.Stderr = os.Stderr
-		err := osCmd.Run()
-		inspect(err)
+func execute(task string, args []string, opts ExecOptions) ([]byte, error) {
+	cmd := exec.Command(task, args...)
+	cmd.Env = append(os.Environ(), opts.Env...)
+	cmd.Dir = opts.Dir
+
+	if opts.Stream {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		return nil, cmd.Run()
 	}
-	return nil
+
+	return cmd.CombinedOutput()
 }
 
 // Check for errors, print the result if found
 func inspect(err error) {
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 		return
 	}
 }
@@ -132,15 +164,5 @@ func ls(folder string) []string {
 func expose(file string) *os.File {
 	outcome, err := os.Open(file)
 	inspect(err)
-	return outcome
-}
-
-// Read any file and return the contents as a byte variable
-func read(file string) []byte {
-	mission, err := os.Open(file)
-	inspect(err)
-	outcome, err := io.ReadAll(mission)
-	inspect(err)
-	defer mission.Close()
 	return outcome
 }

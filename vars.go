@@ -1,6 +1,12 @@
 package main
 
-// BitBucket builds a list of BitBucket tokens and api addresses
+type ExecOptions struct {
+	Stream bool
+	Env    []string
+	Dir    string
+}
+
+// BitBucket builds a list of BitBucket tokens and API addresses
 type BitBucket struct {
 	Email     string `json:"email"`
 	Token     string `json:"token"`
@@ -22,40 +28,17 @@ type Authentication struct {
 
 // Downloads contains the direct download links
 type Downloads struct {
-	Polylang  string `json:"polylang-pro"`
-	AllExport string `json:"wp-all-export-pro"`
-	Gravity   string `json:"gravityforms"`
-	Calendar  string `json:"events-calendar-pro"`
-	Tickets   string `json:"event-tickets-plus"`
-	Virtual   string `json:"events-virtual"`
-	Uji       string `json:"uji-countdown-premium"`
+	Polylang  string `json:"polylang"`
+	AllExport string `json:"wp-all-export"`
+	Spotlight string `json:"spotlight"`
+	Uji       string `json:"uji-countdown"`
 }
 
-// ECP structure captures the contents of the composer.json file for Events Calendar Pro
-type ECP struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
-	Type    string `json:"type"`
-	Require struct {
-		EventsCalendar string `json:"wpackagist-plugin/the-events-calendar"`
-	} `json:"require"`
-}
-
-// EVTP structure captures the contents of the composer.json file for Events Tickets Plus
-type EVTP struct {
-	Name    string `json:"name"`
-	Version string `json:"version"`
-	Type    string `json:"type"`
-	Require struct {
-		EventsCalendar string `json:"wpackagist-plugin/the-events-calendar"`
-		EventsTicket   string `json:"wpackagist-plugin/event-tickets"`
-	} `json:"require"`
-}
-
-// Jira builds a list of jira tokens and api addresses
+// Jira builds a list of jira tokens and API addresses
 type Jira struct {
 	Token string `json:"token"`
 	ToDo  string `json:"todo"`
+	Basic string `json:"basic"`
 	URL   string `json:"url"`
 }
 
@@ -65,20 +48,6 @@ type JQL struct {
 		ID     string `json:"id"`
 		Key    string `json:"key"`
 		Fields struct {
-			Status struct {
-				Self           string `json:"self"`
-				Description    string `json:"description"`
-				IconURL        string `json:"iconUrl"`
-				Name           string `json:"name"`
-				ID             string `json:"id"`
-				StatusCategory struct {
-					Self      string `json:"self"`
-					ID        int    `json:"id"`
-					Key       string `json:"key"`
-					ColorName string `json:"colorName"`
-					Name      string `json:"name"`
-				} `json:"statusCategory"`
-			} `json:"status"`
 			Summary string `json:"summary"`
 		} `json:"fields"`
 	} `json:"issues"`
@@ -93,9 +62,9 @@ type Satis struct {
 
 // Sites holds the login URLs to access the premium plugin accounts
 type Sites struct {
-	Polylang  string `json:"polylang-pro"`
-	AllExport string `json:"wp-all-export-pro"`
-	Gravity   string `json:"gravityforms"`
+	Polylang  string `json:"polylang"`
+	AllExport string `json:"wp-all-export"`
+	Spotlight string `json:"spotlight"`
 }
 
 type Color string
@@ -116,26 +85,25 @@ const (
 	bv       string = "1.0.0"
 	branch   string = "update/"
 	halt     string = "program halted "
-	temp     string = "/data/automation/temp/"
-	repos    string = "/data/automation/repos/"
-	config   string = "/data/automation/jsons/"
+	// temp     string = "/data/automation/temp/"
+	// repos    string = "/data/automation/repos/"
+	// config   string = "/data/automation/jsons/"
+	temp   string = "/Users/bstuike/Documents/local/temp/"
+	repos  string = "/Users/bstuike/Documents/bitbucket/"
+	config string = "/Users/bstuike/Documents/local/resources/"
 )
 
 // List of variables
 var (
-	query      JQL
-	ecp        ECP
-	evtp       EVTP
-	jira       Jira
-	satis      Satis
-	site       Sites
-	plugin     string
-	ticket     string
-	download   Downloads
-	bitbucket  BitBucket
-	credential Authentication
-	cherry     = false
-	jsons      = []string{repos + config + "bitbucket.json", repos + config + "credentials.json", repos + config + "downloads.json", repos + config + "jira.json", repos + config + "sites.json"}
-	// Declare string slices
+	query                JQL
+	jira                 Jira
+	satis                Satis
+	sites                Sites
+	plugin               string
+	ticket               string
+	download             Downloads
+	bitbucket            BitBucket
+	auth                 Authentication
+	cherry               = false
 	folder, number, prem []string
 )

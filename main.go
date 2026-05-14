@@ -16,7 +16,7 @@ func main() {
 	case "-r", "--run":
 		credits()
 		serialize()
-		prem = compiler("premium")
+		prem = compiler("premium-plugin")
 		if len(prem) > 0 {
 			sift(prem)
 		} else {
